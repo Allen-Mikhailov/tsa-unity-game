@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,58 +10,87 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D rightCollider;
     public Collider2D leftCollider;
 
-    public Rigidbody2D rbody;
+    public static PlayerMovement plr;
 
-    Vector2 rightWallJump = new Vector2(-5, 5);
-    Vector2 leftWallJump = new Vector2(5, 5);
-    Vector2 floorJump = new Vector2(0, 5);
+    public Rigidbody2D rb;
 
-    public float maxXVelocity = 7;
-    public float XAcceleration = 200;
+    public float moveSpeed;
+    public float jumpH;
+    public bool grounded;
+    public float maxSpeed;
+    public float airFriction;
+    public float jumpCoolDown = .1f;
+    private float jumpCD;
+    private Vector2 jump;
+    public float sideJump;
+    public float gravity;
 
+    public GameObject camera;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    void setVX(float x)
-    {
-        rbody.velocity = new Vector2(x, rbody.velocity.y);
-    }
-
-    void setVY(float y)
-    {
-        rbody.velocity = new Vector2(rbody.velocity.x, y);
+        plr = gameObject.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        setVX(Mathf.Clamp(rbody.velocity.x + Input.GetAxis("Horizontal")*XAcceleration*Time.deltaTime, -maxXVelocity, maxXVelocity));
-        // setVX(Input.GetAxis("Horizontal")*XAcceleration);
+        float move = Input.GetAxisRaw("Horizontal");
+        if (rb.velocity.x >= maxSpeed)
+            rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
+        else if (rb.velocity.x <= -(maxSpeed))
+            rb.velocity = new Vector2(-(maxSpeed), rb.velocity.y);
+            
+        if (Input.GetAxisRaw("Horizontal") != 0 || true)
+        {   
+            rb.velocity += new Vector2(moveSpeed * Time.deltaTime * move, 0f);
+            // fr = friction + 0.25f;
+        }
 
-        if (rightCollider.IsTouchingLayers())
-        {setVX(Mathf.Min(rbody.velocity.x, 0));}
-
-        if (leftCollider.IsTouchingLayers())
-        {setVX(Mathf.Max(rbody.velocity.x, 0));}
-
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+        bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
+        if (jumpKey && jumpCD == 0)
         {
-            if (rightCollider.IsTouchingLayers())
+            Debug.Log("Jump attempt");
+            if (bottomCollider.IsTouchingLayers())
             {
-                // rbody.AddForce(rightWallJump);
-                rbody.velocity = rightWallJump;
-            } else if (leftCollider.IsTouchingLayers()) {
-                // rbody.AddForce(leftWallJump);
-                rbody.velocity = rightWallJump;
-            } else if (bottomCollider.IsTouchingLayers()) {
-                Debug.Log("jump");
-                // rbody.AddForce(floorJump);
-                setVY(5);
+                Debug.Log("Jump");
+                jump = new Vector2(0f, jumpH);
+                rb.AddForce(jump, ForceMode2D.Impulse);
+                jumpCD = jumpCoolDown;
+            }
+            else if (rightCollider.IsTouchingLayers() )
+            {
+                jump = new Vector2(-(sideJump), (jumpH));
+                rb.velocity = jump;
+                jumpCD = jumpCoolDown;
+            }
+            else if (leftCollider.IsTouchingLayers() )
+            {
+                jump = new Vector2(sideJump, (jumpH));
+                rb.velocity = jump;
+                jumpCD = jumpCoolDown;
             }
         }
+        gravity = 40;
+        jumpCD = Mathf.Max(0, jumpCD-Time.deltaTime);
+
+        if (Input.GetAxisRaw("Vertical") == -1)
+        {
+            gravity = 60;
+        }
+        if ((rightCollider.IsTouchingLayers() || leftCollider.IsTouchingLayers()) && rb.velocity.y <= 0)
+        {
+            gravity = 3.5f;
+            if (Input.GetAxisRaw("Vertical") == -1)
+            {
+                gravity = 30;
+            }
+        }
+        rb.velocity -= new Vector2(0f, gravity * Time.deltaTime);
+
+        if (!bottomCollider.IsTouchingLayers())
+            rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
+
+        camera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 }
