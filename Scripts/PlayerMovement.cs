@@ -19,13 +19,11 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
     public float maxSpeed;
     public float airFriction;
-    public float jumpCoolDown = .1f;
+    public float jumpCoolDown;
     private float jumpCD;
     private Vector2 jump;
     public float sideJump;
     public float gravity;
-
-    public GameObject camera;
 
     void Start()
     {
@@ -41,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         else if (rb.velocity.x <= -(maxSpeed))
             rb.velocity = new Vector2(-(maxSpeed), rb.velocity.y);
             
-        if (Input.GetAxisRaw("Horizontal") != 0 || true)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {   
             rb.velocity += new Vector2(moveSpeed * Time.deltaTime * move, 0f);
             // fr = friction + 0.25f;
@@ -50,23 +48,21 @@ public class PlayerMovement : MonoBehaviour
         bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
         if (jumpKey && jumpCD == 0)
         {
-            Debug.Log("Jump attempt");
             if (bottomCollider.IsTouchingLayers())
             {
-                Debug.Log("Jump");
                 jump = new Vector2(0f, jumpH);
                 rb.AddForce(jump, ForceMode2D.Impulse);
                 jumpCD = jumpCoolDown;
             }
-            else if (rightCollider.IsTouchingLayers() )
+            else if (leftCollider.IsTouchingLayers())
             {
-                jump = new Vector2(-(sideJump), (jumpH));
+                jump = new Vector2(sideJump, (jumpH));
                 rb.velocity = jump;
                 jumpCD = jumpCoolDown;
             }
-            else if (leftCollider.IsTouchingLayers() )
+            else if (rightCollider.IsTouchingLayers())
             {
-                jump = new Vector2(sideJump, (jumpH));
+                jump = new Vector2(-(sideJump), (jumpH));
                 rb.velocity = jump;
                 jumpCD = jumpCoolDown;
             }
@@ -80,6 +76,9 @@ public class PlayerMovement : MonoBehaviour
         }
         if ((rightCollider.IsTouchingLayers() || leftCollider.IsTouchingLayers()) && rb.velocity.y <= 0)
         {
+            if(!bottomCollider.IsTouchingLayers()){
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
             gravity = 3.5f;
             if (Input.GetAxisRaw("Vertical") == -1)
             {
@@ -91,6 +90,5 @@ public class PlayerMovement : MonoBehaviour
         if (!bottomCollider.IsTouchingLayers())
             rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
 
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 }
