@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity += new Vector2(moveSpeed * Time.deltaTime * move, 0f);
             // fr = friction + 0.25f;
         }
-
         bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
         if (jumpKey && jumpCD == 0)
         {
@@ -89,6 +88,5 @@ public class PlayerMovement : MonoBehaviour
 
         if (!bottomCollider.IsTouchingLayers())
             rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
-
     }
 }
