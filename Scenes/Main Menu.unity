@@ -492,8 +492,9 @@ MonoBehaviour:
   LevelButton: {fileID: 6960915876420712003, guid: 57cfdd183ce9513478e70e4865216644, type: 3}
   Levels:
   - Boss Level
-  - Test 2
-  - Test 3
+  - Level 1
+  - Level 2
+  - MainScene
 --- !u!1 &651540961
 GameObject:
   m_ObjectHideFlags: 0

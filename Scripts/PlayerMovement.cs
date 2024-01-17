@@ -9,8 +9,13 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D bottomCollider;
     public Collider2D rightCollider;
     public Collider2D leftCollider;
+    public Collider2D mainCollider;
 
     public static PlayerMovement plr;
+
+    public ParticleSystem deathParticles;
+
+    public CheckPoint checkPoint;
 
     public Rigidbody2D rb;
 
@@ -25,31 +30,74 @@ public class PlayerMovement : MonoBehaviour
     public float sideJump;
     public float gravity;
 
+    public bool inDeathAnim = false;
+    public Vector3 deathPos;
+
+    private GameObject floor;
+
     void Start()
     {
         plr = gameObject.GetComponent<PlayerMovement>();
+
+        ColExpo bottom = bottomCollider.GetComponent<ColExpo>();
+        bottom.TriggerEnter += (Collider2D col) => {floor = col.gameObject;};
+        bottom.TriggerExit += (Collider2D col) => {floor = col.gameObject==floor?null:floor;};
+    }
+
+    IEnumerator KillAnim()
+    {
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+
+        deathPos = transform.position;
+
+        deathParticles.Emit(30);
+        sprite.enabled = false;
+        inDeathAnim = true;
+
+        yield return new WaitForSeconds(2);
+
+        transform.position = checkPoint.gameObject.transform.position;
+        sprite.enabled = true;
+        inDeathAnim = false;
+    }
+
+    public void Kill()
+    {
+        if (inDeathAnim) return;
+        StartCoroutine(KillAnim());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (inDeathAnim)
+        {
+            transform.position = deathPos;
+            return;
+        }
+
         float move = Input.GetAxisRaw("Horizontal");
-        if (rb.velocity.x >= maxSpeed)
-            rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
-        else if (rb.velocity.x <= -(maxSpeed))
-            rb.velocity = new Vector2(-(maxSpeed), rb.velocity.y);
-            
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (move != 0)
         {   
-            rb.velocity += new Vector2(moveSpeed * Time.deltaTime * move, 0f);
+            rb.velocity = new Vector2(
+                Mathf.Clamp(rb.velocity.x + moveSpeed * Time.deltaTime * move, -maxSpeed, maxSpeed), 
+                rb.velocity.y
+            );
             // fr = friction + 0.25f;
         }
+
+        rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
+
         bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
         if (jumpKey && jumpCD == 0)
         {
             if (bottomCollider.IsTouchingLayers())
             {
-                jump = new Vector2(0f, jumpH);
+                float multi = 1;
+                if (floor && floor.GetComponent<Bounce>())
+                    multi = floor.GetComponent<Bounce>().bouce;
+
+                jump = new Vector2(0f, jumpH*multi);
                 rb.AddForce(jump, ForceMode2D.Impulse);
                 jumpCD = jumpCoolDown;
             }
@@ -86,7 +134,5 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.velocity -= new Vector2(0f, gravity * Time.deltaTime);
 
-        if (!bottomCollider.IsTouchingLayers())
-            rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
     }
 }

@@ -32,7 +32,6 @@ public class SceneTransitions : MonoBehaviour
         nextScene = newScene;
         alpha = 0;
         dir = 1;
-        SceneManager.LoadScene(newScene);
     }
 
     // Update is called once per frame
@@ -47,7 +46,7 @@ public class SceneTransitions : MonoBehaviour
             {
                 rect.position = new Vector3(-Screen.width/2 + alpha * Screen.width, Screen.height/2);
             } else if (dir == 0) {
-                rect.position = new Vector3(Screen.width/2, Screen.height/2);
+                rect.position = new Vector3(Screen.width/2+1, Screen.height/2);
             } else if (dir == -1) {
                 rect.position = new Vector3(Screen.width/2 - alpha * Screen.width, Screen.height/2);
             }
@@ -58,6 +57,7 @@ public class SceneTransitions : MonoBehaviour
                 {
                     alpha = -1;
                 } else {
+                    SceneManager.LoadScene(nextScene);
                     alpha = 0;
                     dir--;
                 }
