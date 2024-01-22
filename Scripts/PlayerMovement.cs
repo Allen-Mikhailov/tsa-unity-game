@@ -11,6 +11,11 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D leftCollider;
     public Collider2D mainCollider;
 
+    private GameObject cam;
+    public GameObject camBox;
+
+    public Rect camRect;
+
     public static PlayerMovement plr;
 
     public ParticleSystem deathParticles;
@@ -35,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject floor;
 
+    private Quaternion targetRot;
+
     void Start()
     {
         plr = gameObject.GetComponent<PlayerMovement>();
@@ -42,6 +49,21 @@ public class PlayerMovement : MonoBehaviour
         ColExpo bottom = bottomCollider.GetComponent<ColExpo>();
         bottom.TriggerEnter += (Collider2D col) => {floor = col.gameObject;};
         bottom.TriggerExit += (Collider2D col) => {floor = col.gameObject==floor?null:floor;};
+
+        Camera camera = Camera.main;
+        cam = camera.gameObject;
+
+        float halfHeight = camera.orthographicSize;
+        float halfWidth = camera.aspect * halfHeight;
+
+        Vector3 boxPos = camBox.transform.position;
+        Vector3 boxScale = camBox.transform.localScale;
+
+        camRect = Rect.zero;
+        camRect.xMin = boxPos.x + halfWidth  - boxScale.x/2;
+        camRect.xMax = boxPos.x - halfWidth  + boxScale.x/2;
+        camRect.yMin = boxPos.y + halfHeight - boxScale.y/2;
+        camRect.yMax = boxPos.y - halfHeight + boxScale.y/2;
     }
 
     IEnumerator KillAnim()
@@ -134,5 +156,21 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.velocity -= new Vector2(0f, gravity * Time.deltaTime);
 
+        
+
+        cam.transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, camRect.xMin, camRect.xMax),
+            Mathf.Clamp(transform.position.y, camRect.yMin, camRect.yMax),
+            cam.transform.position.z
+        );
+
+        if (floor)
+        {
+            targetRot =  floor.transform.rotation;
+        } else {
+            targetRot = Quaternion.identity;
+        }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, .3f);
     }
 }
