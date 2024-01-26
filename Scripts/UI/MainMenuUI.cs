@@ -31,7 +31,7 @@ public class MainMenuUI : MonoBehaviour
 
             rtrans.anchoredPosition = new Vector3(Screen.width/2 + spacing * (i - (Levels.Length-1)/2), Screen.height/2);
 
-            newLevelButton.transform.parent = LevelsMenu.transform;
+            newLevelButton.transform.SetParent(LevelsMenu.transform);
         }
     }
 

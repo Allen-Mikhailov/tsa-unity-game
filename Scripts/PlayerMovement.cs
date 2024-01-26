@@ -50,20 +50,23 @@ public class PlayerMovement : MonoBehaviour
         bottom.TriggerEnter += (Collider2D col) => {floor = col.gameObject;};
         bottom.TriggerExit += (Collider2D col) => {floor = col.gameObject==floor?null:floor;};
 
-        Camera camera = Camera.main;
-        cam = camera.gameObject;
+        if (camBox)
+        {
+            Camera camera = Camera.main;
+            cam = camera.gameObject;
 
-        float halfHeight = camera.orthographicSize;
-        float halfWidth = camera.aspect * halfHeight;
+            float halfHeight = camera.orthographicSize;
+            float halfWidth = camera.aspect * halfHeight;
 
-        Vector3 boxPos = camBox.transform.position;
-        Vector3 boxScale = camBox.transform.localScale;
+            Vector3 boxPos = camBox.transform.position;
+            Vector3 boxScale = camBox.transform.localScale;
 
-        camRect = Rect.zero;
-        camRect.xMin = boxPos.x + halfWidth  - boxScale.x/2;
-        camRect.xMax = boxPos.x - halfWidth  + boxScale.x/2;
-        camRect.yMin = boxPos.y + halfHeight - boxScale.y/2;
-        camRect.yMax = boxPos.y - halfHeight + boxScale.y/2;
+            camRect = Rect.zero;
+            camRect.xMin = boxPos.x + halfWidth  - boxScale.x/2;
+            camRect.xMax = boxPos.x - halfWidth  + boxScale.x/2;
+            camRect.yMin = boxPos.y + halfHeight - boxScale.y/2;
+            camRect.yMax = boxPos.y - halfHeight + boxScale.y/2;
+        }
     }
 
     IEnumerator KillAnim()
@@ -157,12 +160,14 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity -= new Vector2(0f, gravity * Time.deltaTime);
 
         
-
-        cam.transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, camRect.xMin, camRect.xMax),
-            Mathf.Clamp(transform.position.y, camRect.yMin, camRect.yMax),
-            cam.transform.position.z
-        );
+        if (camBox)
+        {
+            cam.transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, camRect.xMin, camRect.xMax),
+                Mathf.Clamp(transform.position.y, camRect.yMin, camRect.yMax),
+                cam.transform.position.z
+            );
+        }
 
         if (floor)
         {
