@@ -32,6 +32,7 @@ public class SceneTransitions : MonoBehaviour
         nextScene = newScene;
         alpha = 0;
         dir = 1;
+        PlayerMovement.plr.freeze = true;
     }
 
     // Update is called once per frame

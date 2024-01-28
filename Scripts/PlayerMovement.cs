@@ -14,11 +14,14 @@ public class PlayerMovement : MonoBehaviour
     private GameObject cam;
     public GameObject camBox;
 
-    public Rect camRect;
+    private Rect camRect;
 
     public static PlayerMovement plr;
 
     public ParticleSystem deathParticles;
+
+    public Animator animator;
+    public GameObject animObj;
 
     public CheckPoint checkPoint;
 
@@ -35,12 +38,14 @@ public class PlayerMovement : MonoBehaviour
     public float sideJump;
     public float gravity;
 
+    public bool freeze = false;
+
     public bool inDeathAnim = false;
     public Vector3 deathPos;
 
     private GameObject floor;
 
-    private Quaternion targetRot;
+    private Vector2 currentNormal = Vector2.up;
 
     void Start()
     {
@@ -95,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inDeathAnim)
+        if (inDeathAnim || freeze)
         {
             transform.position = deathPos;
             return;
@@ -110,6 +115,14 @@ public class PlayerMovement : MonoBehaviour
             );
             // fr = friction + 0.25f;
         }
+
+        if (rb.velocity.x > .05f)
+            animObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+        if (rb.velocity.x < -.05f)
+            animObj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+        animator.SetFloat("Speed", Mathf.Abs(move));
 
         rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
 
@@ -169,13 +182,16 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        if (floor)
-        {
-            targetRot =  floor.transform.rotation;
-        } else {
-            targetRot = Quaternion.identity;
-        }
+        RaycastHit2D result = Physics2D.Raycast(
+            new Vector2(transform.position.x, transform.position.y), 
+            Vector2.down, 3);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, .3f);
+        
+        Vector2 normal = result.transform != null?result.normal:Vector2.up;
+        Vector2 newNormal = Vector2.Lerp(currentNormal, normal, .3f);
+
+        rb.rotation = Mathf.Atan2(newNormal.y, newNormal.x)*180/Mathf.PI-90;
+
+        currentNormal = newNormal;
     }
 }
