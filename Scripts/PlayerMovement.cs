@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator KillAnim()
     {
-        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer sprite = animObj.GetComponent<SpriteRenderer>();
 
         deathPos = transform.position;
 
