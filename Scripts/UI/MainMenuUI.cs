@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,8 @@ public class MainMenuUI : MonoBehaviour
     public string[] Levels = {};
 
     float spacing = 200;
+    float yspacing = 75;
+    int row_size = 4;
 
     void Start()
     {
@@ -28,8 +31,14 @@ public class MainMenuUI : MonoBehaviour
 
             Button button = newLevelButton.GetComponent<Button>();
             button.onClick.AddListener(delegate {SceneTransitions.trans.Transition(Levels[i]);});
-
-            rtrans.anchoredPosition = new Vector3(Screen.width/2 + spacing * (i - (Levels.Length-1)/2), Screen.height/2);
+            int row = i/row_size;
+            int row_left = Math.Min(Levels.Length - row*4, row_size);
+            float space = (i%row_left - (row_left-1)/2.0f);
+            float yspace = (row - Levels.Length/row_size/2f);
+            rtrans.anchoredPosition = new Vector3(
+                Screen.width/2 + spacing * space, 
+                Screen.height/2 - yspacing * yspace
+                );
 
             newLevelButton.transform.SetParent(LevelsMenu.transform);
         }
@@ -39,5 +48,11 @@ public class MainMenuUI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OpenLevelMenu()
+    {
+        StartMenu.SetActive(false);
+        LevelsMenu.SetActive(true);
     }
 }

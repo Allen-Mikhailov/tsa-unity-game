@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem deathParticles;
 
     public Animator animator;
+    public SpriteRenderer sprite;
     public GameObject animObj;
 
     public CheckPoint checkPoint;
@@ -127,6 +128,11 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x * airFriction, rb.velocity.y);
 
         bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
+        // Debug.Log("Is Jumping " + jumpCD + " " + bottomCollider.IsTouchingLayers());
+
+        // sprite.color = jumpCD == 0 ?Color.green:Color.red;
+
+
         if (jumpKey && jumpCD == 0)
         {
             if (bottomCollider.IsTouchingLayers())
@@ -136,7 +142,8 @@ public class PlayerMovement : MonoBehaviour
                     multi = floor.GetComponent<Bounce>().bouce;
 
                 jump = new Vector2(0f, jumpH*multi);
-                rb.AddForce(jump, ForceMode2D.Impulse);
+                rb.velocity = jump;
+                // rb.AddForce(jump, ForceMode2D.Impulse);
                 jumpCD = jumpCoolDown;
             }
             else if (leftCollider.IsTouchingLayers())
@@ -190,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 normal = result.transform != null?result.normal:Vector2.up;
         Vector2 newNormal = Vector2.Lerp(currentNormal, normal, .3f);
 
-        rb.rotation = Mathf.Atan2(newNormal.y, newNormal.x)*180/Mathf.PI-90;
+        rb.rotation = Mathf.Clamp(Mathf.Atan2(newNormal.y, newNormal.x)*180/Mathf.PI-90, -45, 45);
 
         currentNormal = newNormal;
     }

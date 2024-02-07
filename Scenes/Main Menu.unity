@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &237491695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -491,10 +491,11 @@ MonoBehaviour:
   LevelsMenu: {fileID: 674326725}
   LevelButton: {fileID: 6960915876420712003, guid: 57cfdd183ce9513478e70e4865216644, type: 3}
   Levels:
-  - Boss Level
   - Level 1
   - Level 2
-  - MainScene
+  - Level 3
+  - Level 4
+  - Boss Level
 --- !u!1 &651540961
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &674326726
 RectTransform:
   m_ObjectHideFlags: 0
@@ -812,7 +813,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1322002658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 633440978}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: OpenLevelMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1322002658
 MonoBehaviour:
   m_ObjectHideFlags: 0
