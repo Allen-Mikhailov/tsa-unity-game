@@ -8,12 +8,12 @@ public class FireBalls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rbody.angularVelocity = 100;
+        rbody.angularVelocity = 50;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rbody.angularVelocity = 100;
+        rbody.angularVelocity = 50;
     }
 }

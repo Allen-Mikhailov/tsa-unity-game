@@ -10,6 +10,7 @@ public class Clock : MonoBehaviour
     private float flip = 1;
     public float speed;
     public float HitForce = 10;
+    public float limit = 50;
 
     public ColExpo ball;
 
@@ -49,7 +50,7 @@ public class Clock : MonoBehaviour
                 speed+=2;
             }
         }
-        if(speed ==28){
+        if(speed >=limit){
             launched = false;
             rb.angularVelocity = 0;
             rb.rotation = -45;
