@@ -87,7 +87,8 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        transform.position = checkPoint.gameObject.transform.position;
+        if (checkPoint && checkPoint.gameObject)
+            transform.position = checkPoint.gameObject.transform.position;
         sprite.enabled = true;
         inDeathAnim = false;
     }

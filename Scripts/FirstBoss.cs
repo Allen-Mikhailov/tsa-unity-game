@@ -5,6 +5,7 @@ using UnityEngine;
 public class FirstBoss : MonoBehaviour
 {
     public GameObject winScreen;
+    public GameObject loseScreen;
     public RectTransform barTransform;
     public float BossLength = 10;
     private float bossTime = 0;
@@ -37,7 +38,8 @@ public class FirstBoss : MonoBehaviour
         {
             nextLaser = laserSpawnTime;
             GameObject newLaser = Object.Instantiate(laserObject, transform) as GameObject;
-            newLaser.transform.position = new Vector3(0, Random.Range(minSpawnHeight, maxSpawnHeight), 0);
+            newLaser.transform.position = new Vector3(0, Random.Range(minSpawnHeight, maxSpawnHeight), -2);
+            newLaser.GetComponent<Lazer>().loseScreen = loseScreen;
         }
 
         if (bossTime >= BossLength)
@@ -45,6 +47,8 @@ public class FirstBoss : MonoBehaviour
             winScreen.SetActive(true);
             gameEnded = true;
             // Time.timeScale  = 0;
+        } else if (loseScreen.activeSelf) {
+            gameEnded = true;
         }
     }
 }

@@ -10,6 +10,7 @@ public class Lazer : MonoBehaviour
     public GameObject warning;
     private SpriteRenderer warningRender;
     public GameObject hit;
+    public GameObject loseScreen;
 
     public ColExpo hitExpo;
 
@@ -39,8 +40,12 @@ public class Lazer : MonoBehaviour
         if (inWarning)
         {return;}
 
+
         if (c == PlayerMovement.plr.mainCollider)
+        {
             PlayerMovement.plr.Kill();
+            loseScreen.SetActive(true);
+        }
     }
 
     // Update is called once per frame

@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &38776350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2229069342022954217, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+  m_PrefabInstance: {fileID: 905375862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c00d6f5e9b752489ba41460595a1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &98727005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,6 +1255,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49416b91b70a1a54ab090bf8210e8925, type: 3}
+--- !u!1001 &905375862
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 192131229280466070, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_Name
+      value: CheckPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267679925644954510, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e534c4a3fb2b1f49b66242c02077996, type: 3}
 --- !u!1001 &912795980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1915,10 +1983,6 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3110735066732853124, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3110735066732853124, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.82
       objectReference: {fileID: 0}
@@ -1966,6 +2030,10 @@ PrefabInstance:
       propertyPath: camBox
       value: 
       objectReference: {fileID: 1602184896}
+    - target: {fileID: 3110735066732853129, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
+      propertyPath: checkPoint
+      value: 
+      objectReference: {fileID: 38776350}
     - target: {fileID: 3110735066732853130, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
       propertyPath: m_LinearDrag
       value: 0.05

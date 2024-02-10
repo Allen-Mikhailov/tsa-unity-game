@@ -27,7 +27,7 @@ public class Teleporter : MonoBehaviour
     {
         // Debug.Log("Teleport");
         PlayerMovement.plr.gameObject.transform.position = marker.transform.position;
-        _teleportCD = Time.timeSinceLevelLoad + .5f;
+        _teleportCD = Time.timeSinceLevelLoad + 2f;
     }
 
     void Start()
