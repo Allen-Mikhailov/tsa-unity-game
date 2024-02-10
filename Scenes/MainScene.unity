@@ -567,11 +567,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &519420028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3343734213570511606, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
-  m_PrefabInstance: {fileID: 3110735066026161283}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &627840677
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1709789687}
+  - component: {fileID: 1709789688}
   m_Layer: 0
   m_Name: Clouds
   m_TagString: Untagged
@@ -829,6 +825,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1709789688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709789686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad0a6fd0e330c24bb93893278833252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1820358133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1177,7 @@ PrefabInstance:
     - target: {fileID: 3110735066732853129, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
       propertyPath: camera
       value: 
-      objectReference: {fileID: 519420028}
+      objectReference: {fileID: 0}
     - target: {fileID: 3110735066732853129, guid: 48b57dac892e0104da32befe11d95dbd, type: 3}
       propertyPath: checkPoint
       value: 
