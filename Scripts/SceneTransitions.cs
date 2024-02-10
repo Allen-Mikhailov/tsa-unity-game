@@ -23,6 +23,7 @@ public class SceneTransitions : MonoBehaviour
     private AudioSource source;
 
     float tweenTime = 1;
+    bool hadMusicUpdate = false;
 
     void Start()
     {
@@ -48,10 +49,13 @@ public class SceneTransitions : MonoBehaviour
 
     public void updateMusic()
     {
+        if (hadMusicUpdate) {return;}
         source.clip = sceneMusic[scene_to_music[current_scene]].music;
         source.Play();
 
         Debug.Log(current_scene + ", " + scene_to_music[current_scene]);
+
+        hadMusicUpdate = true;
     }
 
     public void Transition(string newScene)
@@ -59,6 +63,8 @@ public class SceneTransitions : MonoBehaviour
         nextScene = newScene;
         alpha = 0;
         dir = 1;
+
+        hadMusicUpdate = false;
         
         if (PlayerMovement.plr != null)
             PlayerMovement.plr.freeze = true;
@@ -78,7 +84,6 @@ public class SceneTransitions : MonoBehaviour
             } else if (dir == 0) {
                 rect.position = new Vector3(Screen.width/2+1, Screen.height/2);
                 current_scene = nextScene;
-                updateMusic();
             } else if (dir == -1) {
                 rect.position = new Vector3(Screen.width/2 - alpha * Screen.width, Screen.height/2);
             }
@@ -88,10 +93,14 @@ public class SceneTransitions : MonoBehaviour
                 if (dir == -1)
                 {
                     alpha = -1;
-                } else {
+                } else if (dir == 1) {
+                    updateMusic();
                     SceneManager.LoadScene(nextScene);
                     alpha = 0;
-                    dir--;
+                    dir = 0;
+                } else if (dir == 0) {
+                    alpha = 0;
+                    dir = -1;
                 }
             }
         }

@@ -1094,7 +1094,7 @@ MonoBehaviour:
   - {fileID: 562992237}
   - {fileID: 280038408}
   - {fileID: 488002752}
-  expo_diff: 0.1
+  expo_diff: 0.01
 --- !u!1 &875947342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,8 +2115,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602184896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.4, y: -0.20799923, z: 0}
-  m_LocalScale: {x: 70.57391, y: 28.109013, z: 1}
+  m_LocalPosition: {x: 10.4171, y: -4.5865, z: 0}
+  m_LocalScale: {x: 70.6092, y: 19.353054, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2567,7 +2567,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5.2, y: 5.3738937}
+  m_Offset: {x: -4.5633984, y: 5.3738937}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2578,7 +2578,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 21.1, y: 1.1003017}
+  m_Size: {x: 19.826801, y: 1.1003017}
   m_EdgeRadius: 0
 --- !u!61 &2091425991
 BoxCollider2D:
@@ -2686,7 +2686,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 11.64, y: 2.4}
+  m_Offset: {x: 13.672945, y: 2.1010387}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2697,7 +2697,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.59, y: 6.79}
+  m_Size: {x: 1.1524048, y: 13.953245}
   m_EdgeRadius: 0
 --- !u!61 &2091425995
 BoxCollider2D:
@@ -2735,6 +2735,10 @@ PrefabInstance:
     - target: {fileID: 2504072439518256608, guid: 906a891eb1996974fa5507856c4698b4, type: 3}
       propertyPath: m_Name
       value: Parallax (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504072439518256609, guid: 906a891eb1996974fa5507856c4698b4, type: 3}
+      propertyPath: expo_diff
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2504072439518256614, guid: 906a891eb1996974fa5507856c4698b4, type: 3}
       propertyPath: m_RootOrder

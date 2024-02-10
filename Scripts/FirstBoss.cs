@@ -14,6 +14,8 @@ public class FirstBoss : MonoBehaviour
     public float minSpawnHeight;
     public float maxSpawnHeight;
 
+    bool gameEnded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class FirstBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameEnded) {return;}
         bossTime += Time.deltaTime;
 
         float alpha = Mathf.Min(1, bossTime/BossLength);
@@ -40,7 +43,8 @@ public class FirstBoss : MonoBehaviour
         if (bossTime >= BossLength)
         {
             winScreen.SetActive(true);
-            Time.timeScale  = 0;
+            gameEnded = true;
+            // Time.timeScale  = 0;
         }
     }
 }
